@@ -43,13 +43,13 @@ def check_repetitions(array) -> List:
 
 def build_error_message(employee_array, day) -> str: 
     message = f"<font color={g_const.error_color}>"
-    message += f"{DAYS[day]} - {employee_array[0].shift} è stato assegnato {employee_array[0].name} contemporaneamente a: "
+    message += f"📅 {DAYS[day].upper()} - è stato assegnato <b>{employee_array[0].name.capitalize()}</b> contemporaneamente a: <br>"
     for employee in employee_array:
-        message += f"{employee.sala} come {employee.job}, "
+        message += f"❌ {employee.sala} come <u>{employee.job}</u> di <u>{employee.shift}</u> <br>"
     
-    message += "</font>\n"
+    message += "</font>"
     return message
 
 
 def formatString(data: str) -> str:
-  return "".join(data.lower().split())
+  return data.lower() if data else None

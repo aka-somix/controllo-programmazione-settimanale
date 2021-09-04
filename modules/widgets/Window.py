@@ -2,6 +2,7 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QFileDialog, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QTextEdit
 from modules.widgets import g_constants as g_const
+from modules.entities.constants import ERRORS
 from modules.csv_check import CheckCsv
 from modules import __version__
 
@@ -74,7 +75,7 @@ class Window(QWidget):
         self.outputTextArea = QTextEdit()
         self.outputTextArea.setReadOnly(True)
         self.setFont(QFont('Helvetica', g_const.font_size_small))
-        self.outputTextArea.setPlainText("Pronto ad iniziare.")
+        self.outputTextArea.setText(f"<font color={g_const.secondary_color}> 😎 Pronto ad iniziare. </font>")
         bodyLayout.addWidget(self.outputTextArea)
         
         # ------------------ FOOTER LAYOUT ------------------
@@ -101,7 +102,7 @@ class Window(QWidget):
             self.uploadedFileLabel.setText(f"<font color={g_const.secondary_color}>File corrente: {filename}</font>")
             if filename.endswith('.xlsx'):
                 self.filename = filename
-                self.outputTextArea.setPlainText("Pronto ad iniziare.")
+                self.outputTextArea.setText(f"<font color={g_const.secondary_color}> 😎 Pronto ad iniziare. </font>")
                 self.checkFileButton.setEnabled(True)
                 self.checker.set_document(self.filename)
             else:
@@ -111,18 +112,22 @@ class Window(QWidget):
                 
 
     def check_week(self):
-        self.outputTextArea.setPlainText("Processando\n")
+        self.outputTextArea.setText(f"<font color={g_const.secondary_color}> 🕝 Processando.. </font>")
         self.checkFileButton.setEnabled(False)
+        try:
+            errors, warnings = self.checker.check_file()
+            self.outputTextArea.setText(f"<font color={g_const.secondary_color}> FINITO 💪. Risultato: </font>")
+            
+            if len(errors) == 0 and len(warnings) == 0:
+                self.outputTextArea.append(f"<font color={g_const.success_color}> ✅ Programmazione Corretta! </font>")
+            else:
+                self.outputTextArea.append("---\n")
+                errors.extend(warnings)
+                for mes in errors:
+                    self.outputTextArea.append(f"{mes}\n\n")
+        except Exception as e:
+            self.outputTextArea.setText(f"<font color={g_const.error_color}>\
+                💀 Errore Applicativo {ERRORS['general']}. Per favore contatta il supporto. 💀</font>")
+            
         
-        errors, warnings = self.checker.check_file()
-        messages = ""
-        
-        if len(errors) == 0 and len(warnings) == 0:
-            messages = f"<font color={g_const.success_color}> Programmazione Corretta! </font>"
-        else:
-            errors.extend(warnings)
-            for mes in errors:
-                messages += f"{mes}\n"
-        
-        self.outputTextArea.setText(messages)
         self.checkFileButton.setEnabled(True)

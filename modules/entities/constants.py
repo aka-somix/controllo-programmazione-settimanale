@@ -12,3 +12,7 @@ DAYS = {
   'sat': 'Sabato',
   'sun': 'Domenica',
 }
+
+ERRORS = {
+  'general': '0x01'
+}

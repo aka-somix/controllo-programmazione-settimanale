@@ -73,7 +73,6 @@ class DataExtractor():
     employeeList = []
     for sala in SALA_LETTER[shift].keys():
       # strumentista
-      name = self.sheet[f"{DAY_LETTER[day]['str']}{SALA_LETTER[shift][sala]}"].value
       employeeList.append(
         Employee(
           name= self.sheet[f"{DAY_LETTER[day]['str']}{SALA_LETTER[shift][sala]}"].value,

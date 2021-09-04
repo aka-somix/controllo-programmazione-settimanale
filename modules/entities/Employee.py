@@ -1,6 +1,8 @@
+from modules.util import formatString
+
 class Employee():
   def __init__(self, name: str, sala: str, shift: str, job: str):
-    self.name = name
+    self.name = formatString(name)
     self.sala = sala
     self.shift = shift
     self.job = job

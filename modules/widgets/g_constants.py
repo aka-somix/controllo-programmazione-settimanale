@@ -3,7 +3,7 @@
 primary_color = "#3262a8"
 error_color = "#c20047"
 success_color = "#00c735"
-secondary_color = "#1f3c6b"
+secondary_color = "#7a7a7a"
 btn_text_color = "#ffffff"
 
 # font size

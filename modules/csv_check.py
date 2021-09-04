@@ -13,14 +13,13 @@ class CheckCsv:
     self.extractor = DataExtractor(document_name)
   
   def __check_day(self, day: str)-> List:
-    errors = []
     warnings = []
     
     morning_employees = self.extractor.get_employeeList(day=day, shift="morning")
     afternoon_employees = self.extractor.get_employeeList(day=day, shift="afternoon")
-    errors = [build_error_message(employee_array, day) for employee_array in check_repetitions(morning_employees)]
-    errors.extend([build_error_message(employee_array, day) for employee_array in check_repetitions(afternoon_employees)])
-    return errors, warnings
+    employees = morning_employees + afternoon_employees
+    return [build_error_message(employee_array, day)
+            for employee_array in check_repetitions(employees)], warnings
 
 
   def check_file(self):
