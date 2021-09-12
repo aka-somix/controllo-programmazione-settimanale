@@ -37,6 +37,10 @@ pyinstaller ps-check.spec
 # CHANGELOG
 Version number is updated in the \_\_init\_\_.py file inside modules folder. 
 
+**[ALPHA1.2.1]** 
+  - *Changed*
+    - Endo and Sala6 are now checked correctly
+
 **[ALPHA1.2.0]**  
 - *Added*
   - Improved Graphic 

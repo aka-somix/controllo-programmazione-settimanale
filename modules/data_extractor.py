@@ -41,14 +41,15 @@ DAY_LETTER = {
 }
 
 # excel row for every shift and sala
-SALA_LETTER = {
+SALA_NUMBER = {
   'morning': {
     'Sala 1': 4,
     'Sala 2': 5,
     'Sala 3': 6,
     'Sala 4': 7,
     'Sala 5': 8,
-    'ENDO': 9,
+    'Sala 6': 9,
+    'ENDO': 10,
     'JOLLY': 12
   },
   'afternoon': {
@@ -71,11 +72,11 @@ class DataExtractor():
                        day="mon",
                        shift="morning") -> List:
     employeeList = []
-    for sala in SALA_LETTER[shift].keys():
+    for sala in SALA_NUMBER[shift].keys():
       # strumentista
       employeeList.append(
         Employee(
-          name= self.sheet[f"{DAY_LETTER[day]['str']}{SALA_LETTER[shift][sala]}"].value,
+          name= self.sheet[f"{DAY_LETTER[day]['str']}{SALA_NUMBER[shift][sala]}"].value,
           job="Strumentista",
           shift= EN_TO_IT[shift],
           sala= sala
@@ -84,7 +85,7 @@ class DataExtractor():
       # volante
       employeeList.append(
         Employee(
-          name= self.sheet[f"{DAY_LETTER[day]['vol']}{SALA_LETTER[shift][sala]}"].value,
+          name= self.sheet[f"{DAY_LETTER[day]['vol']}{SALA_NUMBER[shift][sala]}"].value,
           job="Volante",
           shift= EN_TO_IT[shift],
           sala= sala
@@ -94,10 +95,11 @@ class DataExtractor():
         # edome...
         employeeList.append(
           Employee(
-            name= self.sheet[f"{DAY_LETTER[day]['edo']}{SALA_LETTER[shift][sala]}"].value,
+            name= self.sheet[f"{DAY_LETTER[day]['edo']}{SALA_NUMBER[shift][sala]}"].value,
             job="E. Domestiche",
             shift= EN_TO_IT[shift],
             sala= sala
           )
         )
+    print(list(map(lambda x: x.__str__(), employeeList)))
     return list(filter(lambda e: e.name, employeeList))
